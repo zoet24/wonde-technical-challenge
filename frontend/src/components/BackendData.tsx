@@ -9,7 +9,8 @@ const BackendData: React.FC = () => {
         const response = await fetch("http://localhost:8000");
         const data = await response.json();
 
-        setSchoolName(data.data.name);
+        console.log(data);
+        // setSchoolName(data.data.name);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

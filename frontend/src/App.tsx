@@ -3,8 +3,13 @@ import BackendData from "./components/BackendData";
 function App() {
   return (
     <div>
-      <h1 className="text-2xl">Hello!</h1>
       <BackendData />
+
+      {/* Information about school */}
+      {/* Dropdown select of teachers */}
+      {/* Monday - Friday list */}
+      {/* List of classes each day */}
+      {/* List of students in each class */}
     </div>
   );
 }
