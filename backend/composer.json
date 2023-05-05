@@ -1,0 +1,9 @@
+{
+    "name": "zoethexton/backend",
+    "autoload": {
+        "psr-4": {
+            "Zoethexton\\Backend\\": "src/"
+        }
+    },
+    "require": {}
+}
