@@ -28,8 +28,6 @@ $client = new Client([
 try {
     $response = $client->get('');
     $data = json_decode($response->getBody(), true);
-
-    var_dump($data);
 } catch (\Exception $e) {
     http_response_code(500);
     $data = [

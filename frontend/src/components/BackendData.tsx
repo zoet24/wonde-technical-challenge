@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 
-const BackendMessage: React.FC = () => {
-  const [message, setMessage] = useState<string>("");
+const BackendData: React.FC = () => {
+  const [schoolName, setSchoolName] = useState<string>("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch("http://localhost:8000");
         const data = await response.json();
-        setMessage(data.message);
+
+        setSchoolName(data.data.name);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -19,9 +20,13 @@ const BackendMessage: React.FC = () => {
 
   return (
     <div>
-      <p>{message}</p>
+      {schoolName ? (
+        <p>School name: {schoolName}</p>
+      ) : (
+        <p>Loading school name...</p>
+      )}
     </div>
   );
 };
 
-export default BackendMessage;
+export default BackendData;
