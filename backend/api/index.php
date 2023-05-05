@@ -9,7 +9,7 @@ $dotenv = Dotenv::createImmutable(__DIR__ . '/..');
 $dotenv->load();
 
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); // This allows cross-origin requests; for better security, replace '*' with your frontend domain.
+header('Access-Control-Allow-Origin: *');
 
 // Access the API_ACCESS_TOKEN from the .env file
 $apiAccessToken = $_ENV['API_ACCESS_TOKEN'];
@@ -39,7 +39,7 @@ try {
     // Fetch all classes at test school
     $classesResponse = $client->get("schools/{$schoolId}/classes", [
         'query' => [
-            'include' => 'employees',
+            'include' => 'employees,students',
         ]
     ]);
     $classesData = json_decode($classesResponse->getBody(), true)['data'];
@@ -54,10 +54,20 @@ try {
             }
         }
 
+        // Extract the students' data
+        $students = array_map(function($student) {
+            return [
+                'id' => $student['id'],
+                'forename' => $student['forename'],
+                'surname' => $student['surname']
+            ];
+        }, $class['students']['data']);
+
         return [
             'id' => $class['id'],
             'name' => $class['name'],
-            'main_teacher_id' => $mainTeacherId
+            'main_teacher_id' => $mainTeacherId,
+            'students' => $students
         ];
     }, $classesData);
 
@@ -89,7 +99,7 @@ try {
 
     $teachersById = [];
     foreach ($teachersData as $teacher) {
-        $teacher['classes'] = []; // Initialize an empty 'classes' array for each teacher
+        $teacher['classes'] = [];
         $teachersById[$teacher['id']] = $teacher;
     }
 
@@ -101,7 +111,7 @@ try {
         }
     }
 
-    // Convert the associative array back to an indexed array, only include teachers who have classes
+    // Only include teachers who have classes
     $teachersWithClasses = [];
     foreach ($teachersById as $teacher) {
         if (!empty($teacher['classes'])) {
@@ -109,13 +119,10 @@ try {
         }
     }
     
-
-
     // Combine the school and teachers data
     $data = [
-        // 'school' => $school,
+        'school' => $school,
         'teachers' => $teachersWithClasses,
-        // 'classes' => $classes
     ];
 
 } catch (\Exception $e) {
