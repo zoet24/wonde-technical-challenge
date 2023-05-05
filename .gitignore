@@ -1,6 +1,7 @@
 /backend/src
 /backend/vendor
+/backend/.env
 
-# dependencies
+
 /frontend/node_modules
 /frontend/package-lock.json
