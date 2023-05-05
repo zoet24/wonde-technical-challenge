@@ -5,8 +5,8 @@ function App() {
     <div>
       <BackendData />
 
-      {/* Information about school */}
-      {/* Dropdown select of teachers */}
+      {/* Information about school - display schoolData */}
+      {/* Dropdown select of teachers - display dropdown list of all teachers in teacherData */}
       {/* Monday - Friday list */}
       {/* List of classes each day */}
       {/* List of students in each class */}
