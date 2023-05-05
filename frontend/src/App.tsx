@@ -1,7 +1,10 @@
+import BackendMessage from "./components/BackendData";
+
 function App() {
   return (
     <div>
-      <p className="text-2xl">Hello!</p>
+      <h1 className="text-2xl">Hello!</h1>
+      <BackendMessage />
     </div>
   );
 }
