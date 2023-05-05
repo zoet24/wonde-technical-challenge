@@ -26,10 +26,15 @@ $client = new Client([
 ]);
 
 try {
+    // SCHOOL
     // Fetch school data
     $schoolResponse = $client->get("schools/{$schoolId}");
     $schoolData = json_decode($schoolResponse->getBody(), true)['data'];
+    $school = [
+        'name' => $schoolData['name']
+    ];
 
+    // TEACHERS
     // Fetch all staff employed at test school
     $allEmployeesResponse = $client->get("schools/{$schoolId}/employees", [
         'query' => [
@@ -39,15 +44,37 @@ try {
     $allEmployeesData = json_decode($allEmployeesResponse->getBody(), true)['data'];
 
     // Get all teaching staff from all employees
-    $teachers = array_filter($allEmployeesData, function($employee) {
+    $teachersData = array_filter($allEmployeesData, function($employee) {
         return $employee['employment_details']['data']['current'] === true &&
                $employee['employment_details']['data']['teaching_staff'] === true;
     });
 
+    $teachers = array_map(function($teacher) {
+        return [
+            'id' => $teacher['id'],
+            'title' => $teacher['title'],
+            'forename' => $teacher['forename'],
+            'surname' => $teacher['surname']
+        ];
+    }, $teachersData);
+
+
+    // CLASSES
+    // Fetch all classes at test school
+    $classesResponse = $client->get("schools/{$schoolId}/classes", [
+        'query' => [
+            'include' => 'employees',
+            // 'include' => 'students',
+        ]
+    ]);
+    $classesData = json_decode($classesResponse->getBody(), true)['data'];
+
+
     // Combine the school and teachers data
     $data = [
-        'school' => $schoolData,
-        'teachers' => $teachers
+        // 'school' => $school,
+        'teachers' => $teachers,
+        // 'classes' => $classesData
     ];
 
 } catch (\Exception $e) {
