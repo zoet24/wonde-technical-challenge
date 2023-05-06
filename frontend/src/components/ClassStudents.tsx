@@ -9,10 +9,15 @@ interface ClassStudentsProps {
 function ClassStudents({ students }: ClassStudentsProps) {
   return (
     <div>
-      <h3>Students:</h3>
-      <ul>
+      <ul className="space-y-2">
         {students.map((student) => (
-          <li key={student.id}>
+          <li key={student.id} className="flex items-center">
+            <div className="mr-2 h-10 w-10 rounded-full border-white border-2 bg-blue-light flex items-center justify-center">
+              <span>
+                {student.forename.charAt(0)}
+                {student.surname.charAt(0)}
+              </span>
+            </div>
             {student.forename} {student.surname}
           </li>
         ))}

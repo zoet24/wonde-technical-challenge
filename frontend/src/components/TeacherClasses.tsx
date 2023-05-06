@@ -23,7 +23,9 @@ function TeacherClasses({ classes }: TeacherClassesProps) {
       <h2>Classes:</h2>
       {classes.map((classInfo) => (
         <div key={classInfo.id}>
-          <h3>{classInfo.name}</h3>
+          <h3>
+            {classInfo.name} ({classInfo.students.length})
+          </h3>
           <ClassStudents students={classInfo.students} />
         </div>
       ))}

@@ -25,18 +25,21 @@ function SelectTeacher({ teachers }: SelectTeacherProps) {
 
   return (
     <div>
-      <h2>Select a teacher</h2>
-      <select
-        value={selectedTeacher ? selectedTeacher.id : ""}
-        onChange={handleChange}
-      >
-        <option value="">Select a teacher...</option>
-        {teachers.map((teacher) => (
-          <option key={teacher.id} value={teacher.id}>
-            {teacher.title} {teacher.forename} {teacher.surname}
-          </option>
-        ))}
-      </select>
+      <div className="flex items-center">
+        <h2 className="mr-2">Teacher:</h2>
+        <select
+          value={selectedTeacher ? selectedTeacher.id : ""}
+          onChange={handleChange}
+          className="bg-blue-dark focus:outline-none p-2 rounded-lg border-2 border-white"
+        >
+          <option value="">Select a teacher...</option>
+          {teachers.map((teacher) => (
+            <option key={teacher.id} value={teacher.id}>
+              {teacher.title} {teacher.forename} {teacher.surname}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {selectedTeacher && <TeacherClasses classes={selectedTeacher.classes} />}
     </div>

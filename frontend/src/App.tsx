@@ -21,12 +21,13 @@ function App() {
   }, []);
 
   return (
-    <div>
+    <main>
       {/* School information */}
+      <h1>School!</h1>
 
       {/* Select teacher dropdown */}
       <SelectTeacher teachers={data.teachers} />
-    </div>
+    </main>
   );
 }
 
