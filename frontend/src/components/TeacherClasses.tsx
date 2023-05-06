@@ -1,3 +1,5 @@
+import ClassStudents from "./ClassStudents";
+
 type Student = {
   id: string;
   forename: string;
@@ -18,10 +20,11 @@ type TeacherClassesProps = {
 function TeacherClasses({ classes }: TeacherClassesProps) {
   return (
     <div>
-      <h2>Classes</h2>
-      {classes.map((classItem) => (
-        <div key={classItem.id}>
-          <h3>{classItem.name}</h3>
+      <h2>Classes:</h2>
+      {classes.map((classInfo) => (
+        <div key={classInfo.id}>
+          <h3>{classInfo.name}</h3>
+          <ClassStudents students={classInfo.students} />
         </div>
       ))}
     </div>
