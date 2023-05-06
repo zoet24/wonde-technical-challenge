@@ -43,7 +43,10 @@ function App() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetch("http://localhost:8000");
+        // const response = await fetch("http://localhost:8000"); Dev
+        const response = await fetch(
+          "https://wonde-technical-challenge.vercel.app/"
+        );
         const fetchedData = await response.json();
 
         setData(fetchedData);
