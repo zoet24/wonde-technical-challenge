@@ -18,7 +18,7 @@ $apiAccessToken = $_ENV['API_ACCESS_TOKEN'];
 $schoolId = "A1930499544";
 
 $client = new Client([
-    'base_uri' => "https://api.wonde.com/v1.0/",
+    'base_uri' => "https://api.wonde.com/v1.0/schools/{$schoolId}/",
     'headers' => [
         'Authorization' => 'Bearer ' . $apiAccessToken,
         'Accept' => 'application/json'
@@ -28,7 +28,7 @@ $client = new Client([
 try {
     // SCHOOL
     // Fetch school data
-    $schoolResponse = $client->get("schools/{$schoolId}");
+    $schoolResponse = $client->get("");
     $schoolData = json_decode($schoolResponse->getBody(), true)['data'];
     $school = [
         'name' => $schoolData['name'],
@@ -37,7 +37,7 @@ try {
 
     // CLASSES
     // Fetch all classes at test school
-    $classesResponse = $client->get("schools/{$schoolId}/classes", [
+    $classesResponse = $client->get("classes", [
         'query' => [
             'include' => 'employees,students',
         ]
@@ -54,7 +54,7 @@ try {
             }
         }
 
-        // Extract the students' data
+        // Extract the students' data and sort alphabetically
         $students = array_map(function($student) {
             return [
                 'id' => $student['id'],
@@ -62,6 +62,13 @@ try {
                 'surname' => $student['surname']
             ];
         }, $class['students']['data']);
+
+        usort($students, function($a, $b) {
+            if ($a['surname'] === $b['surname']) {
+                return strcmp($a['forename'], $b['forename']);
+            }
+            return strcmp($a['surname'], $b['surname']);
+        });
 
         return [
             'id' => $class['id'],
@@ -74,7 +81,7 @@ try {
 
     // TEACHERS
     // Fetch all staff employed at test school
-    $allEmployeesResponse = $client->get("schools/{$schoolId}/employees", [
+    $allEmployeesResponse = $client->get("employees", [
         'query' => [
             'include' => 'employment_details'
         ]

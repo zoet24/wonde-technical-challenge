@@ -46,8 +46,6 @@ function App() {
         const response = await fetch("http://localhost:8000");
         const fetchedData = await response.json();
 
-        console.log(fetchedData);
-
         setData(fetchedData);
       } catch (error) {
         console.error("Error fetching data:", error);
