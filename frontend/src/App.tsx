@@ -1,15 +1,31 @@
-import BackendData from "./components/BackendData";
+import { useState, useEffect } from "react";
+
+import SelectTeacher from "./components/SelectTeacher";
 
 function App() {
+  const [data, setData] = useState({ school: {}, teachers: [] });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:8000");
+        const fetchedData = await response.json();
+
+        setData(fetchedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
-      <BackendData />
+      {/* School information */}
 
-      {/* Information about school - display schoolData */}
-      {/* Dropdown select of teachers - display dropdown list of all teachers in teacherData */}
-      {/* Monday - Friday list */}
-      {/* List of classes each day */}
-      {/* List of students in each class */}
+      {/* Select teacher dropdown */}
+      <SelectTeacher teachers={data.teachers} />
     </div>
   );
 }
