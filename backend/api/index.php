@@ -31,7 +31,7 @@ try {
     $schoolResponse = $client->get("schools/{$schoolId}");
     $schoolData = json_decode($schoolResponse->getBody(), true)['data'];
     $school = [
-        'name' => $schoolData['name']
+        'name' => $schoolData['name'],
     ];
 
 
