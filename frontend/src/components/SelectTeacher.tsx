@@ -25,7 +25,7 @@ function SelectTeacher({ teachers }: SelectTeacherProps) {
 
   return (
     <div>
-      <div className="flex items-center">
+      <div className="flex items-center justify-center mb-4">
         <h2 className="mr-2">Teacher:</h2>
         <select
           value={selectedTeacher ? selectedTeacher.id : ""}

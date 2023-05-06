@@ -21,9 +21,9 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <main className="px-8 mx-auto max-w-xl">
       {/* School information */}
-      <h1>School!</h1>
+      <h1 className="text-center mb-4">School!</h1>
 
       {/* Select teacher dropdown */}
       <SelectTeacher teachers={data.teachers} />
